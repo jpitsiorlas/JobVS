@@ -40,8 +40,8 @@ def parallel_sizes(image, labels):
 
 def Calculate_sizes(root, num_workers, remake=False):
     # ! Modified to read annotations in OASIS format. [N. Valderrama ~ May 17th]
+   # for fold in ['fold2']:
     for fold in ['fold2']:
-#    for fold in ['fold1', 'fold2']:
 
         file = os.path.join(root, fold, 'dataset.json' )
         dataset = json.load(open(file, 'r'))

@@ -9,11 +9,38 @@ from scipy.ndimage.morphology import binary_erosion
 from scipy.spatial.distance import cdist
 from libs.dataloader import helpers
 from libs.utilities.utils import draw_curve
+from skimage.morphology import skeletonize,skeletonize_3d
 
 from sklearn.metrics import average_precision_score, precision_recall_curve
 
 import warnings
 warnings.filterwarnings("ignore")
+
+def cl_score(v, s):
+    """[this function computes the skeleton volume overlap]
+    Args:
+        v ([bool]): [image]
+        s ([bool]): [skeleton]
+    Returns:
+        [float]: [computed skeleton volume intersection]
+    """
+    return np.sum(v*s)/np.sum(s)
+
+def clDice(v_p, v_l):
+    """[this function computes the cldice metric]
+    Args:
+        v_p ([bool]): [predicted image]
+        v_l ([bool]): [ground truth image]
+    Returns:
+        [float]: [cldice metric]
+    """
+    if len(v_p.shape)==2:
+        tprec = cl_score(v_p,skeletonize(v_l))
+        tsens = cl_score(v_l,skeletonize(v_p))
+    elif len(v_p.shape)==3:
+        tprec = cl_score(v_p,skeletonize_3d(v_l))
+        tsens = cl_score(v_l,skeletonize_3d(v_p))
+    return 2*tprec*tsens/(tprec+tsens)
 
 def test(folder, root_dir, csv_file, classes, detection=False):
     # ! Modified to read annotations in UNETR format
@@ -143,6 +170,7 @@ def parallel_test(im, lb, test_dir, root_dir, classes):
     dice = []
     precision = []
     recall = []
+    clDs = []
     # hausdorff = []
     print(im)
     name = im[:-4]
@@ -167,8 +195,7 @@ def parallel_test(im, lb, test_dir, root_dir, classes):
     
     # Vessel
     im_path = os.path.join(test_dir, 'vessels', im)
-    lb_path = os.path.join(root_dir.replace(
-                            'original', 'mask'), lb)
+    lb_path = os.path.join(root_dir, lb)
 
     image, affine = read_image(im_path)
     label, _ = read_image(lb_path)
@@ -181,11 +208,12 @@ def parallel_test(im, lb, test_dir, root_dir, classes):
     dice.append(dc)
     precision.append(prec)
     recall.append(rec)
+    cl = clDice(image,label)
+    clDs.append(cl)
     
     # Vessel
     im_path = os.path.join(test_dir, 'vessels_brain', im)
-    lb_path = os.path.join(root_dir.replace(
-                            'original', 'mask'), lb)
+    lb_path = os.path.join(root_dir, lb)
 
     image, affine = read_image(im_path)
     label, _ = read_image(lb_path)
@@ -199,7 +227,7 @@ def parallel_test(im, lb, test_dir, root_dir, classes):
     precision.append(prec)
     recall.append(rec)
     
-    return [name] + dice + recall + precision
+    return [name] + dice + recall + precision + clDs
 
 
 def parallel_test_det(im, lb, test_dir, root_dir, classes):

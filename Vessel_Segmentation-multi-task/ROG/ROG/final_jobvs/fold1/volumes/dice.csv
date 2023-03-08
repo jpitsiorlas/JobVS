@@ -1,0 +1,3 @@
+Label,mAP_Brain,mAP_Vessels,mAP_Vessels_with_Brain,Recall_Brain,Recall_Vessels,Recall_Vessels_with_Brain,Precision_Brain,Precision_Vessels,Precision_Vessels_with_Brain
+175_0000.ni,0.0,0.0,0.0,0.0,0.0,0.0,nan,nan,nan
+mean,0.0,0.0,0.0,0.0,0.0,0.0,nan,nan,nan

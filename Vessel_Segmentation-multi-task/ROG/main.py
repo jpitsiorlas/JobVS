@@ -343,10 +343,10 @@ def main(rank, world_size, args):
         _ = adversary.run_standard_evaluation_individual(bs=info['test_batch'])
     else:
         # EVALUATE THE MODEL
-        trainer.test(
-            info, ddp_model, test_loader, images_path,
-            info['data_file'], rank, world_size)
-        dist.barrier()
+#         trainer.test(
+#             info, ddp_model, test_loader, images_path,
+#             info['data_file'], rank, world_size)
+#         dist.barrier()
         # CALCULATE THE FINAL METRICS
         classes = 3 if args.detection else 4
         if rank == 0:
@@ -387,9 +387,9 @@ if __name__ == '__main__':
     # TRAINING HYPERPARAMETERS
     parser.add_argument('--lr', type=float, default=1e-3,
                         help='Initial learning rate (default: 1e-3)')
-    parser.add_argument('--epochs', type=int, default=100,
+    parser.add_argument('--epochs', type=int, default=200,
                         help='Maximum number of epochs (default: 1000)')
-    parser.add_argument('--patience', type=int, default=50,
+    parser.add_argument('--patience', type=int, default=100,
                         help='Patience of the scheduler (default: 50)')
     parser.add_argument('--batch', type=int, default=1,
                         help='Batch size (default: 2)')

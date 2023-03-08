@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 matplotlib.pyplot.switch_backend('Agg')
 
-EXPS_PATH = '/home/pitsiorl/Shiny_Icarus/Vessel_Segmentation-multi-task/ROG/'#'/media/SSD0/nfvalderrama/Vessel_Segmentation/exps'
+EXPS_PATH = '//home/pitsiorl/Shiny_Icarus/Vessel_Segmentation-multi-task/ROG/'#'/media/SSD0/nfvalderrama/Vessel_Segmentation/exps'
 
 def draw_curve(scores, save_path):
 
@@ -160,7 +160,7 @@ def compute_metrics_ap(path_preds, path_anns, model, fold, inf_mode, ods=False):
     
     if ods:
 
-        thresholds = np.linspace(0, 1, 3)
+        thresholds = [0.5]
         for i in thresholds:
             print(f'-------Computing stats for {fold} {inf_mode} threshold {i}------')
             patients = Parallel(n_jobs=30)(
@@ -183,7 +183,7 @@ if __name__ == '__main__':
     PATH_ANNS = '/home/pitsiorl/Shiny_Icarus/data/dataset/original'#/media/SSD0/nfvalderrama/Vessel_Segmentation/data/Vessel_Segmentation/mask'
 
     PATH_PREDS = {
-                  'Multitask_Brain_Vessel': 'ROG',
+                  'final_jobvs': 'ROG',
 
                   }
     
@@ -203,7 +203,7 @@ if __name__ == '__main__':
         # for inf_mode in ['mask', 'original', 'masks_pred']:
             pd_resume = {}
             pd_resume['Name'] = [f'{model}_{pred}_{inf_mode}']
-            for fold in ['fold2', 'fold1']:
+            for fold in ['fold1']:
                 metrics, curves = compute_metrics_ap(pred, PATH_ANNS, model, fold, inf_mode,ods=True)
                 print(f'-------Saving stats for {fold} {inf_mode} ------')
                 for i, metric in enumerate(metrics):

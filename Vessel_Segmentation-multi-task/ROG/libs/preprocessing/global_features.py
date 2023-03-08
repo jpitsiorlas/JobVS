@@ -44,7 +44,7 @@ def global_stats(mean, std, size):
 def Global_features(root, num_workers):
     # ! Modified to read annotations in OASIS format. [N. Valderrama ~ May 17th]
     statistics = {}
-    for i in ['fold1', 'fold2']:
+    for i in ['fold2']:
         file = os.path.join(root, f'stats_{i}.json' )
         if os.path.isfile(file):
             with open(file, 'r') as f:

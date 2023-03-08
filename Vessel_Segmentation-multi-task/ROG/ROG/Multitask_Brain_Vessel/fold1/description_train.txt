@@ -1,0 +1,22 @@
+task :  Vessel_Segmentation
+classes :  2
+p_size :  [212, 212, 96]
+in_size :  [192, 192, 96]
+val_size :  [256, 256, 96]
+test_size :  [256, 256, 96]
+batch :  1
+test_batch :  1
+patience :  50
+seed :  12345
+output_folder :  
+root :  /home/pitsiorl/Shiny_Icarus/data/dataset/original/fold1
+data_file :  /home/pitsiorl/Shiny_Icarus/data/dataset/original/fold1/dataset.json
+classes :  2
+modalities :  1
+strides :  [[2, 2, 1], [2, 2, 2], [2, 2, 2]]
+img_size :  [192, 192, 96]
+in_channels :  1
+out_channels :  2
+feature_size :  48
+use_checkpoint :  True
+Number of parameters: 2596379

@@ -4,7 +4,7 @@ from image_sizes import Calculate_sizes
 
 data_root = '/home/pitsiorl/Shiny_Icarus/data/dataset/original/'
 out_directory = '/home/pitsiorl/Shiny_Icarus/data/dataset/original/'
-num_workers = 50
+num_workers = 30
 process_again=True
 
 # Calculate the statistics of the original dataset

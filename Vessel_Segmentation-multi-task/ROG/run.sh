@@ -1,7 +1,7 @@
 TASK_ID=0
 GPU_IDs=0
 BATCH_SIZE=1
-FOLD=1
+FOLD=2
 PORT=8
 MODEL=ROG
 WEIGHTS='/home/pitsiorl/Shiny_Icarus/Vessel_Segmentation-multi-task/ROG/ROG/fold1/best_dice.pth.tar'
@@ -15,14 +15,14 @@ OUTPUT_DIR='/home/pitsiorl/Shiny_Icarus/Vessel_Segmentation-multi-task/ROG/'$MOD
 OUTPUT_DIR_FREE_AT=$OUTPUT_DIR'/AT'
 #############################################################################
 
-# For the standard training
+#For the standard training
 # CUDA_VISIBLE_DEVICES=$GPU_IDs python main.py \
 #     --port $PORT --model $MODEL \
 #     --fold $FOLD --task $TASK_ID \
 #     --gpu $GPU_IDs --batch $BATCH_SIZE \
 #     --name $OUTPUT_DIR \
 #     --load_weights $WEIGHTS \
-#     --resume
+#     #--resume
 
 # TASK_ID=0
 # GPU_IDs=3
@@ -49,7 +49,7 @@ OUTPUT_DIR_FREE_AT=$OUTPUT_DIR'/AT'
 #     --name $OUTPUT_DIR \
 #     --load_weights $WEIGHTS \
 
-Test
+#Test
 CUDA_VISIBLE_DEVICES=$GPU_IDs python main.py \
     --port $PORT --model $MODEL \
     --fold $FOLD --task $TASK_ID \

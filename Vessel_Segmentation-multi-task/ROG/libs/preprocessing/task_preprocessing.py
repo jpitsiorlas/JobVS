@@ -9,8 +9,8 @@ from utils import read_json, preprocess, cases_list
 
 def Preprocess_datasets(out_dir, root, workers, remake):
     # ! Modified to read annotations in OASIS format. [N. Valderrama ~ May 17th]
-    folds = ['fold1', 'fold2']
-    main_root = '/media/SSD0/nfvalderrama/Vessel_Segmentation/data/tof'
+    folds = ['fold2']
+    main_root = '/home/pitsiorl/Shiny_Icarus/data/dataset/original/'
     for x in folds:
         out_task = os.path.join(out_dir, x)
         os.makedirs(out_task, exist_ok=True)
